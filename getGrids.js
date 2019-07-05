@@ -32,7 +32,7 @@ function updateInLevelGrid1() {
         }
     }
 
-    if (checkIfValidPoint(point1_input, 1) && safeToGetGrid()) {
+    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
         getGrids();
     }
 }
@@ -40,7 +40,7 @@ function updateInLevelGrid1() {
 function updateInLevelGrid2() {
     level_grid2 = parseInt(document.getElementById("level_grid2").value);
 
-    if (checkIfValidPoint(point1_input, 1) && safeToGetGrid()) {
+    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
         getGrids();
     }
     
@@ -49,7 +49,7 @@ function updateInLevelGrid2() {
 function updateInPoint1() {
     point1_input = document.getElementById("point1").value.split(",");
     
-    if (checkIfValidPoint(point1_input, 1) && safeToGetGrid()) {
+    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
         getGrids();
     }
     document.getElementById("Output_text_info").innerHTML = "";
@@ -58,7 +58,7 @@ function updateInPoint1() {
 function updateInPoint2() {
     point2_input = document.getElementById("point2").value.split(",");
 
-    if (checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
+    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
         getGrids();
     }
     document.getElementById("Output_text_info").innerHTML = "";
