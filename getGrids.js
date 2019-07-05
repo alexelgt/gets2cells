@@ -108,8 +108,11 @@ function getGrids() {
                                                                              + "<button id='btngetexandblockedgyms' class='STRING_GET_S217' onclick='downloadGrid(" + 2 + ");'>S2 Cells Level "+ level_grid2 + "</button>";
         }
         document.getElementsByClassName("results_block")[0].style.display = 'block';
+      }, 0);
+
+    setTimeout(function() {
         document.getElementById("Output_working").style.display = "none";
-      }, 100);
+    }, 200);
 
     
 }
