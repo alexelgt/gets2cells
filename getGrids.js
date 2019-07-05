@@ -295,10 +295,10 @@ function handleInputPoints(point1_input, point2_input) {
 
 function downloadGrid(grid) {
     if (grid == 1) {
-        downloadOutputFile(kml_string_grid1, "kml", "S2CellsLevel14")
+        downloadOutputFile(kml_string_grid1, "kml", "Level" + level_grid1 + "S2Cells")
     }
     else if (grid == 2) {
-        downloadOutputFile(kml_string_grid2, "kml", "S2CellsLevel17")
+        downloadOutputFile(kml_string_grid2, "kml", "Level" + level_grid2 + "S2Cells")
     }
 }
 
