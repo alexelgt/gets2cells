@@ -104,8 +104,8 @@ function getGrids() {
                                                                              + "<button id='btngetexandblockedgyms' class='STRING_GET_S217' onclick='downloadGrid(" + 2 + ");'>Celdas S2 Nivel "+ level_grid2 + "</button>";
         }
         else {
-            document.getElementsByClassName("download_buttons")[0].innerHTML = "<button id='btngetexandblockedgyms' class='STRING_GET_S214' onclick='downloadGrid(" + 1 + ");'>S2 Cells Level " + level_grid1 + "</button>"
-                                                                             + "<button id='btngetexandblockedgyms' class='STRING_GET_S217' onclick='downloadGrid(" + 2 + ");'>S2 Cells Level "+ level_grid2 + "</button>";
+            document.getElementsByClassName("download_buttons")[0].innerHTML = "<button id='btngetexandblockedgyms' class='STRING_GET_S214' onclick='downloadGrid(" + 1 + ");'>Level " + level_grid1 + " S2 Cells</button>"
+                                                                             + "<button id='btngetexandblockedgyms' class='STRING_GET_S217' onclick='downloadGrid(" + 2 + ");'>Level "+ level_grid2 + " S2 Cells</button>";
         }
         document.getElementsByClassName("results_block")[0].style.display = 'block';
       }, 0);

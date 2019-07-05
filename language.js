@@ -10,8 +10,6 @@ function language(){
 
     document.getElementsByClassName("STRING_GRID_LEVELS")[0].innerHTML = "Niveles de las cuadrículas"
 
-    
-
     document.getElementsByClassName("STRING_GRID1")[0].innerHTML = "Cuadrícula 1"
     document.getElementsByClassName("STRING_GRID2")[0].innerHTML = "Cuadrícula 2"
 
@@ -20,9 +18,6 @@ function language(){
     document.getElementsByClassName("STRING_PROBLEMS_DETECTED")[0].innerHTML = "Errores detectados"
     
     document.getElementsByClassName("STRING_DOWNLOADS")[0].innerHTML = "Descargas"
-
-    
-
   }
 }
 
@@ -39,7 +34,7 @@ function language_credits(){
     document.getElementsByClassName("STRING_CREDITS_TITLE")[0].innerHTML = "Créditos"
     document.getElementsByClassName("STRING_MORE_INFO")[0].innerHTML = "Más información"
 
-    document.getElementsByClassName("STRING_S2GEOMETRY")[0].innerHTML = "Esta librería es usada para obtener el centro de las celdas S2 de nivel 20 que contienen el gimnasio."
+    document.getElementsByClassName("STRING_S2GEOMETRY")[0].innerHTML = "Esta librería es usada para obtener las celdas S2 y comprobar si un punto está dentro de una celda S2."
   }
 }
 
