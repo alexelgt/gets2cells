@@ -52,6 +52,7 @@ function updateInPoint1() {
     if (checkIfValidPoint(point1_input, 1) && safeToGetGrid()) {
         getGrids();
     }
+    document.getElementById("Output_text_info").innerHTML = "";
 }
 
 function updateInPoint2() {
@@ -60,14 +61,26 @@ function updateInPoint2() {
     if (checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
         getGrids();
     }
+    document.getElementById("Output_text_info").innerHTML = "";
+}
+
+function showPressIntro() {
+    if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
+        document.getElementById("Output_text_info").innerHTML = "Pulsa Intro para actualizar"
+    }
+    else {
+        document.getElementById("Output_text_info").innerHTML = "Press Intro to update"
+    }
 }
 
 document.getElementById('level_grid1').addEventListener('change', updateInLevelGrid1, false);
 document.getElementById('level_grid2').addEventListener('change', updateInLevelGrid2, false);
 
-document.getElementById('point1').addEventListener('input', updateInPoint1, false);
-document.getElementById('point2').addEventListener('input', updateInPoint2, false);
+document.getElementById('point1').addEventListener('change', updateInPoint1, false);
+document.getElementById('point2').addEventListener('change', updateInPoint2, false);
 
+document.getElementById('point1').addEventListener('input', showPressIntro, false);
+document.getElementById('point2').addEventListener('input', showPressIntro, false);
 
 
 function getGrids() {
