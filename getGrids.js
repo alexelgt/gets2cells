@@ -109,7 +109,7 @@ function getGrids() {
         }
         document.getElementsByClassName("results_block")[0].style.display = 'block';
         document.getElementById("Output_working").style.display = "none";
-      }, 0);
+      }, 100);
 
     
 }
