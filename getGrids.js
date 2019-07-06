@@ -1,11 +1,16 @@
-// 40.57618, -4.0972290
+var data_global_gyms;
+var gyms_data;
+
+var problems_with_gyms = false;
+
+var current_mode = "Points";
 
 var level_grid1 = parseInt(document.getElementById("level_grid1").value);
 var level_grid2 = parseInt(document.getElementById("level_grid2").value);
 
 var point1_input = document.getElementById("point1").value.split(",");
 var point2_input = document.getElementById("point2").value.split(",");
-debugger
+
 var kml_string_grid1 = "";
 var kml_string_grid2 = "";
 
@@ -32,35 +37,27 @@ function updateInLevelGrid1() {
         }
     }
 
-    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
-        getGrids();
-    }
+    isThereAnyError();
 }
 
 function updateInLevelGrid2() {
     level_grid2 = parseInt(document.getElementById("level_grid2").value);
 
-    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
-        getGrids();
-    }
+    isThereAnyError();
     
 }
 
 function updateInPoint1() {
     point1_input = document.getElementById("point1").value.split(",");
     
-    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
-        getGrids();
-    }
+    isThereAnyError();
     document.getElementById("Output_text_info").innerHTML = "";
 }
 
 function updateInPoint2() {
     point2_input = document.getElementById("point2").value.split(",");
 
-    if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
-        getGrids();
-    }
+    isThereAnyError();
     document.getElementById("Output_text_info").innerHTML = "";
 }
 
@@ -73,6 +70,42 @@ function showPressIntro() {
     }
 }
 
+/*==== Gyms ====*/
+function handleFilegyms (evt) {
+    const fr_gyms = new FileReader();
+    fr_gyms.readAsText(evt.target.files[0]);
+
+    output_filename = evt.target.files[0].name.replace('.csv', '').replace('.txt', '');
+
+    fr_gyms.onload = e => {
+        data_global_gyms = (e.target.result);
+        gyms_data = JSON.parse(csvJSON(data_global_gyms));
+
+        /*==== Check if any of the rows contains valid data ====*/
+        problems_with_gyms = false;
+        anyValidGym = removeProblematicGymRows(); // this function returns the number of valid gyms
+
+        if (!anyValidGym) {
+            if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
+                document.getElementById("Output_error_gyms").innerHTML = "• Ninguno de los gimnasios es válido . Por favor, seleccione un archivo válido.<br>";
+            }
+            else {
+                document.getElementById("Output_error_gyms").innerHTML = "• None of the gyms are valid. Please, select a valid file.<br>";
+            }
+            document.getElementById("Output_error_orange").innerHTML = "";
+            document.getElementsByClassName("results_block")[0].style.display = 'none';
+            throw new Error("None of the gyms are valid");
+        }
+        else {
+            document.getElementById("Output_error_gyms").innerHTML = "";
+            isThereAnyError();
+        }
+        /*== Check if any of the rows contains valid data ==*/
+        
+    };
+};
+/*== Gyms ==*/
+
 document.getElementById('level_grid1').addEventListener('change', updateInLevelGrid1, false);
 document.getElementById('level_grid2').addEventListener('change', updateInLevelGrid2, false);
 
@@ -81,6 +114,8 @@ document.getElementById('point2').addEventListener('change', updateInPoint2, fal
 
 document.getElementById('point1').addEventListener('input', showPressIntro, false);
 document.getElementById('point2').addEventListener('input', showPressIntro, false);
+
+document.getElementById('gymsfile').addEventListener('change', handleFilegyms, false);
 
 
 function getGrids() {
@@ -271,23 +306,36 @@ function writeKmlFile(horizontal_lines, vertical_lines, grid_style, level) {
 
 function handleInputPoints(point1_input, point2_input) {
 
-    var point1 = {lat: parseFloat(point1_input[0]), lng: parseFloat(point1_input[1])};
-    var point2 = {lat: parseFloat(point2_input[0]), lng: parseFloat(point2_input[1])};
+    var point1;
+    var point2;
 
-    if (point1.lat < point2.lat) {
-        var temp = point1.lat;
-
-        point1.lat = point2.lat;
-        point2.lat = temp;
-
+    if (current_mode == "Points" ) {
+        point1 = {lat: parseFloat(point1_input[0]), lng: parseFloat(point1_input[1])};
+        point2 = {lat: parseFloat(point2_input[0]), lng: parseFloat(point2_input[1])};
+    
+        if (point1.lat < point2.lat) {
+            var temp = point1.lat;
+    
+            point1.lat = point2.lat;
+            point2.lat = temp;
+    
+        }
+    
+        if (point1.lng > point2.lng) {
+            var temp = point1.lng;
+    
+            point1.lng = point2.lng;
+            point2.lng = temp;
+        }
     }
+    if (current_mode == "Gyms" ) {
 
-    if (point1.lng > point2.lng) {
-        var temp = point1.lng;
+        var [min_lat, min_lng, max_lat, max_lng] = getMaxMinLatLng();
 
-        point1.lng = point2.lng;
-        point2.lng = temp;
+        point1 = {lat: max_lat, lng: min_lng};
+        point2 = {lat: min_lat, lng: max_lng};
     }
+    
     
     return [point1, point2];
 }
@@ -359,12 +407,12 @@ function checkIfValidPoint(point, point_number) {
 
     if (isPointValid) {
         document.getElementsByClassName("results_block")[0].style.display = 'block';
-        document.getElementsByClassName("errors_block")[0].style.display = 'none';
+        document.getElementsByClassName("error_block")[0].style.display = 'none';
         document.getElementById("Output_error_red").innerHTML = "";
     }
     else {
         document.getElementsByClassName("results_block")[0].style.display = 'none';
-        document.getElementsByClassName("errors_block")[0].style.display = 'block';
+        document.getElementsByClassName("error_block")[0].style.display = 'block';
     }
 
     return isPointValid;
@@ -413,13 +461,46 @@ function safeToGetGrid() {
 
     if (isSafeToGetGrid) {
         document.getElementsByClassName("results_block")[0].style.display = 'block';
-        document.getElementsByClassName("errors_block")[0].style.display = 'none';
+        document.getElementsByClassName("error_block")[0].style.display = 'none';
         document.getElementById("Output_error_red").innerHTML = "";
     }
     else {
         document.getElementsByClassName("results_block")[0].style.display = 'none';
-        document.getElementsByClassName("errors_block")[0].style.display = 'block';
+        document.getElementsByClassName("error_block")[0].style.display = 'block';
     }
 
     return isSafeToGetGrid;
+}
+
+function isThereAnyError() {
+    var errorGyms = document.getElementById("Output_error_gyms").textContent;
+    var errorOrange = document.getElementById("Output_error_orange").textContent;
+    var errorRed = document.getElementById("Output_error_red").textContent;
+
+
+    if (current_mode == "Points") {
+        if (checkIfValidPoint(point1_input, 1) && checkIfValidPoint(point2_input, 2) && safeToGetGrid()) {
+            getGrids();
+        }
+    }
+    if (current_mode == "Gyms") {
+        document.getElementById("Output_error_red").style.display = 'block';
+        if (errorGyms != "" || errorOrange != "" || errorRed != "") {
+            document.getElementsByClassName("error_block")[0].style.display = 'block';
+        }
+        else if ( errorGyms == "" && errorOrange == "" && errorRed == "") {
+            document.getElementsByClassName("error_block")[0].style.display = 'none';
+            document.getElementsByClassName("results_block")[0].style.display = 'block';
+        }
+
+        if (errorGyms == "" && errorRed == "") {
+            document.getElementsByClassName("results_block")[0].style.display = 'block';
+            getGrids();
+        }
+        if (errorGyms != "" || errorRed != "") {
+            document.getElementsByClassName("results_block")[0].style.display = 'none';
+        }
+    }
+    
+    
 }
