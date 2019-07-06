@@ -484,23 +484,23 @@ function isThereAnyError() {
         }
     }
     if (current_mode == "Gyms") {
-        document.getElementById("Output_error_red").style.display = 'block';
-        if (errorGyms != "" || errorOrange != "" || errorRed != "") {
-            document.getElementsByClassName("error_block")[0].style.display = 'block';
-        }
-        else if ( errorGyms == "" && errorOrange == "" && errorRed == "") {
-            document.getElementsByClassName("error_block")[0].style.display = 'none';
-            document.getElementsByClassName("results_block")[0].style.display = 'block';
-        }
-
-        if (errorGyms == "" && errorRed == "") {
-            document.getElementsByClassName("results_block")[0].style.display = 'block';
-            getGrids();
-        }
-        if (errorGyms != "" || errorRed != "") {
-            document.getElementsByClassName("results_block")[0].style.display = 'none';
+        if (gyms_data != undefined) {
+            document.getElementById("Output_error_red").style.display = 'block';
+            if (errorGyms != "" || errorOrange != "" || errorRed != "") {
+                document.getElementsByClassName("error_block")[0].style.display = 'block';
+            }
+            else if ( errorGyms == "" && errorOrange == "" && errorRed == "") {
+                document.getElementsByClassName("error_block")[0].style.display = 'none';
+                document.getElementsByClassName("results_block")[0].style.display = 'block';
+            }
+    
+            if (errorGyms == "" && errorRed == "") {
+                document.getElementsByClassName("results_block")[0].style.display = 'block';
+                getGrids();
+            }
+            if (errorGyms != "" || errorRed != "") {
+                document.getElementsByClassName("results_block")[0].style.display = 'none';
+            }
         }
     }
-    
-    
 }
