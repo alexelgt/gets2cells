@@ -286,7 +286,6 @@ button:disabled::after, input[type=file]:disabled + label::before, input[type=fi
     line-height: 30px;
     border:1px solid #c4c4c4;
     text-transform: none;
-
 }
 
 #button_structure > div:hover {
@@ -382,7 +381,6 @@ input {
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
-    
 }
 
 input:focus {
@@ -394,11 +392,8 @@ input + span {
     font-weight: bold;
     top:-30px;
     left:10px;
-
     padding: 0px 3px;
-    
     background-color: #fff;
-    
     border-radius: 6px;
 }
 
@@ -406,7 +401,6 @@ input:first-child{
     margin-top: -10px;
 }
 input {
-    
     position: relative;
     top:20px;
 }
@@ -448,6 +442,7 @@ span.log, #select_text_block{
 }
 /*== Text ==*/
 
+/*==== Sidebar ====*/
 #hamburger {
     position: fixed;
     top: 7px;
@@ -457,7 +452,6 @@ span.log, #select_text_block{
     background-image: url("hamburger-icon.png");
     background-size: 100% 100%
 }
-
 
 #sidebar-overlay {
     position: fixed;
@@ -538,7 +532,9 @@ span.log, #select_text_block{
     color: #7b1efb;
     background-color: #ece1fd;
 }
+/*== Sidebar ==*/
 
+/*==== Info section ====*/
 ul {
     list-style-type:decimal;
 }
@@ -582,112 +578,108 @@ img#example {
     font-size: 18px;
     font-weight: bold;
 }
+/*== Info section ==*/
 
-
-
-/* select starting stylings ------------------------------*/
+/*==== Select ====*/
 .select {
     font-family:
-      'Roboto','Helvetica','Arial',sans-serif;
-      position: relative;
-      width: 100px;
-      margin: 20px 20px 0;
-  }
-  
-  .select-text {
-      position: relative;
-      font-family: inherit;
-      background-color: transparent;
-      width: 100px;
-      padding: 10px 10px 10px 0;
-      font-size: 18px;
-      border-radius: 0;
-      border: none;
-      border-bottom: 1px solid rgba(0,0,0, 0.12);
-  }
-  
-  /* Remove focus */
-  .select-text:focus {
-      outline: none;
-      border-bottom: 1px solid rgba(0,0,0, 0);
-  }
-  
-      /* Use custom arrow */
-  .select .select-text {
-      appearance: none;
-      -webkit-appearance:none
-  }
-  
-  .select:after {
-      position: absolute;
-      top: 18px;
-      right: 10px;
-      /* Styling the down arrow */
-      width: 0;
-      height: 0;
-      padding: 0;
-      content: '';
-      border-left: 6px solid transparent;
-      border-right: 6px solid transparent;
-      border-top: 6px solid rgba(0, 0, 0, 0.12);
-      pointer-events: none;
-  }
-  
-  .select-label {
-	
-	font-weight: normal;
-	position: absolute;
-	pointer-events: none;
-	left: 0;
-	
-    
-    color: #000;
-	top: -10px;
-	transition: 0.2s ease all;
-	font-size: 14px;
+    'Roboto','Helvetica','Arial',sans-serif;
+    position: relative;
+    width: 100px;
+    margin: 20px 20px 0;
+}
+
+.select-text {
+    position: relative;
+    font-family: inherit;
+    background-color: transparent;
+    width: 100px;
+    padding: 10px 10px 10px 0;
+    font-size: 18px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid rgba(0,0,0, 0.12);
 }
   
+/* Remove focus */
+.select-text:focus {
+    outline: none;
+    border-bottom: 1px solid rgba(0,0,0, 0);
+}
   
-  /* BOTTOM BARS ================================= */
-  .select-bar {
-      position: relative;
-      display: block;
-      width: 100px;
-  }
+/* Use custom arrow */
+.select .select-text {
+    appearance: none;
+    -webkit-appearance:none
+}
   
-  .select-bar:before, .select-bar:after {
-      content: '';
-      height: 2px;
-      width: 0;
-      bottom: 1px;
-      position: absolute;
-      background: #2F80ED;
-      transition: 0.2s ease all;
-  }
-  
-  .select-bar:before {
-      left: 50%;
-  }
-  
-  .select-bar:after {
-      right: 50%;
-  }
-  
-  /* active state */
-  .select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
-      width: 50%;
-  }
-  
-  /* HIGHLIGHTER ================================== */
-  .select-highlight {
-      position: absolute;
-      height: 60%;
-      width: 100px;
-      top: 25%;
-      left: 0;
-      pointer-events: none;
-      opacity: 0.5;
-  }
+.select:after {
+    position: absolute;
+    top: 18px;
+    right: 10px;
+/* Styling the down arrow */
+    width: 0;
+    height: 0;
+    padding: 0;
+    content: '';
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+}
+
+.select-label {
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 0;	
+    color: #000;
+    top: -10px;
+    transition: 0.2s ease all;
+    font-size: 14px;
+}
+
+/* BOTTOM BARS */
+.select-bar {
+    position: relative;
+    display: block;
+    width: 100px;
+}
+
+.select-bar:before, .select-bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: #000;
+    transition: 0.2s ease all;
+}
+
+.select-bar:before {
+    left: 50%;
+}
+
+.select-bar:after {
+    right: 50%;
+}
+
+/* active state */
+.select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
+width: 50%;
+}
+
+/* HIGHLIGHTER */
+.select-highlight {
+position: absolute;
+height: 60%;
+width: 100px;
+top: 25%;
+left: 0;
+pointer-events: none;
+opacity: 0.5;
+}
+/*== Select ==*/
 
 @media (min-width: 600px){
     #Output_table_data {

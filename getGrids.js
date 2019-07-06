@@ -114,7 +114,6 @@ function getGrids() {
         document.getElementById("Output_working").style.display = "none";
     }, 200);
 
-    
 }
 
 function getCellCorners(point, level) {
@@ -312,7 +311,30 @@ function checkIfValidPoint(point, point_number) {
         else {
             document.getElementById("Output_error_red").innerHTML = "• Point " + point_number + " not valid.";
         }
-        isPointValid = false;
+        if (point == "") {
+            if (point_number == 1) {
+                point1_input = point2_input
+            }
+            else if (point_number == 2) {
+                point2_input = point1_input
+            }
+        }
+        else {
+            isPointValid = false;
+        }
+
+        if (document.getElementById("point1").value == "" && document.getElementById("point2").value == "") {
+            if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
+                document.getElementById("Output_error_red").innerHTML = "• Introduce las coordenadas de al menos un punto.";
+            }
+            else {
+                document.getElementById("Output_error_red").innerHTML = "• Put the coordinates of at least one point.";
+            }
+            point1_input = document.getElementById("point1").value;
+            point2_input = document.getElementById("point2").value;
+
+            isPointValid = false;
+        }
     }
     else {
         if (point[0] > 90.0 || point[0] < -90.0) {

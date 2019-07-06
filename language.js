@@ -8,6 +8,9 @@ function language(){
     document.getElementsByClassName("STRING_POINT_1")[0].innerHTML = "Punto 1"
     document.getElementsByClassName("STRING_POINT_2")[0].innerHTML = "Punto 2"
 
+    document.getElementById("point1").placeholder = "Se usan las coordenadas del punto 2"
+    document.getElementById("point2").placeholder = "Se usan las coordenadas del punto 1"
+
     document.getElementsByClassName("STRING_GRID_LEVELS")[0].innerHTML = "Niveles de las cuadrículas"
 
     document.getElementsByClassName("STRING_GRID1")[0].innerHTML = "Cuadrícula 1"
