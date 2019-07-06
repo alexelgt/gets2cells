@@ -18,8 +18,6 @@ function handleSelectedmode() {
         }
     }
 }
-
-document.getElementById('button_structure').addEventListener('click', handleSelectedmode, false);
 /*== Deal with page style if select_mode is changed ==*/
 
 function setMode(mode,pressed_div) {
@@ -46,4 +44,5 @@ function setMode(mode,pressed_div) {
     function changeModeVar(mode,parentClass) {
         current_mode = mode;
     }
+    handleSelectedmode();
 }
