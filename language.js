@@ -26,6 +26,7 @@ function language(){
     document.getElementsByClassName("STRING_GRID2")[0].innerHTML = "Cuadrícula 2"
 
     document.getElementsByClassName("STRING_WORKING")[0].innerHTML = "Ejecutando..."
+    document.getElementsByClassName("STRING_PRESS_INTRO")[0].innerHTML = "Pulsa Intro para actualizar"
 
     document.getElementsByClassName("STRING_PROBLEMS_DETECTED")[0].innerHTML = "Errores detectados"
     
