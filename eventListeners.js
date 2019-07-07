@@ -1,8 +1,10 @@
 /*==== Level Grids ====*/
 function updateInLevelGrid1() {
-
+    /*=== Update level grid 1 ===*/
     level_grid1 = parseInt(document.getElementById("level_grid1").value);
 
+    /*==== Update level grid 2 options ====*/
+    // Grid 2 is treated as a subgrid so level grid 2 must be higher than level grid 1
     document.getElementById("level_grid2").innerHTML = '';
 
     if (!(level_grid2 > level_grid1 && level_grid2 <= 20)) {
@@ -17,11 +19,13 @@ function updateInLevelGrid1() {
             document.getElementById("level_grid2").innerHTML += "<option>" + i + "</option>";
         }
     }
+    /*== Update level grid 2 options ==*/
 
     isThereAnyError();
 }
 
 function updateInLevelGrid2() {
+    /*=== Update level grid 2 ===*/
     level_grid2 = parseInt(document.getElementById("level_grid2").value);
 
     isThereAnyError();
@@ -33,17 +37,19 @@ document.getElementById('level_grid2').addEventListener('change', updateInLevelG
 
 /*==== Points ====*/
 function updateInPoint1() {
+    /*=== Update point 2 ===*/
     point1_input = document.getElementById("point1").value.split(",");
-    
+
+    changePressIntroText()
     isThereAnyError();
-    document.getElementById("Output_text_info").innerHTML = "";
 }
 
 function updateInPoint2() {
+    /*=== Update point 2 ===*/
     point2_input = document.getElementById("point2").value.split(",");
 
+    changePressIntroText()
     isThereAnyError();
-    document.getElementById("Output_text_info").innerHTML = "";
 }
 
 document.getElementById('point1').addEventListener('change', updateInPoint1, false);
@@ -51,17 +57,24 @@ document.getElementById('point2').addEventListener('change', updateInPoint2, fal
 /*== Points ==*/
 
 /*==== Press Intro Message ====*/
-function showPressIntro() {
-    if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
-        document.getElementById("Output_text_info").innerHTML = "Pulsa Intro para actualizar"
+function changePressIntroText() {
+    let intro_text = document.getElementById("Output_text_info").innerHTML;
+
+    if (intro_text == "") {
+        if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
+            document.getElementById("Output_text_info").innerHTML = "Pulsa Intro para actualizar"
+        }
+        else {
+            document.getElementById("Output_text_info").innerHTML = "Press Intro to update"
+        }
     }
     else {
-        document.getElementById("Output_text_info").innerHTML = "Press Intro to update"
+        document.getElementById("Output_text_info").innerHTML = "";
     }
 }
 
-document.getElementById('point1').addEventListener('input', showPressIntro, false);
-document.getElementById('point2').addEventListener('input', showPressIntro, false);
+document.getElementById('point1').addEventListener('input', changePressIntroText, false);
+document.getElementById('point2').addEventListener('input', changePressIntroText, false);
 /*== Press Intro Message ==*/
 
 /*==== Gyms ====*/
