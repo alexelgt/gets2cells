@@ -47,7 +47,7 @@ function getGrids() {
 
         /*=== Get grid 2 ===*/
         var [horizontal_lines_grid2, vertical_lines_grid2] = getLines(point1_innergrid, point2_innergrid, level_grid2);
-    
+
         /*==== Get kml strings ====*/
         kml_string_grid1 = writeKmlFile(horizontal_lines_grid1, vertical_lines_grid1, grid_style1, level_grid1);
         kml_string_grid2 = writeKmlFile(horizontal_lines_grid2, vertical_lines_grid2, grid_style2, level_grid2);
@@ -128,7 +128,7 @@ function getLines(point1, point2, level) {
         do {
             corners = getCellCorners(point_to_analyze, level);
             horizontal_line_point2 = corners[2];
-    
+
             if (isFirstLine) {
                 vertical_lines.push([corners[2], undefined]);
             }
@@ -200,7 +200,7 @@ function setGridPoints(point1_input, point2_input) {
             point1.lat = point2.lat;
             point2.lat = temp;
         }
-    
+
         if (point1.lng > point2.lng) {
             var temp = point1.lng;
     
