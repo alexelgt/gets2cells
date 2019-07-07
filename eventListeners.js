@@ -40,7 +40,7 @@ function updateInPoint1() {
     /*=== Update point 2 ===*/
     point1_input = document.getElementById("point1").value.split(",");
 
-    changePressIntroText()
+    changePressIntroText();
     isThereAnyError();
 }
 
@@ -48,7 +48,7 @@ function updateInPoint2() {
     /*=== Update point 2 ===*/
     point2_input = document.getElementById("point2").value.split(",");
 
-    changePressIntroText()
+    changePressIntroText();
     isThereAnyError();
 }
 
@@ -58,18 +58,13 @@ document.getElementById('point2').addEventListener('change', updateInPoint2, fal
 
 /*==== Press Intro Message ====*/
 function changePressIntroText() {
-    let intro_text = document.getElementById("Output_text_info").innerHTML;
+    let intro_text = document.getElementById("Output_text_info").style.display;
 
-    if (intro_text == "") {
-        if (navigator.language == "es-es" || navigator.language == "es" || navigator.language == "es-ES") {
-            document.getElementById("Output_text_info").innerHTML = "Pulsa Intro para actualizar"
-        }
-        else {
-            document.getElementById("Output_text_info").innerHTML = "Press Intro to update"
-        }
+    if (intro_text == "none") {
+        document.getElementById("Output_text_info").style.display = "block";
     }
     else {
-        document.getElementById("Output_text_info").innerHTML = "";
+        document.getElementById("Output_text_info").style.display = "none";
     }
 }
 

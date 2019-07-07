@@ -61,7 +61,6 @@ function removeProblematicGymRows() {
 }
 
 function getMaxMinLatLng() {
-    const offset = 0.001;
     min_possible_lat = -90.0;
     min_possible_lng = -180.0;
 
