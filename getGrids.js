@@ -1,22 +1,31 @@
+/*==== Set global variables ====*/
+/*==== Data ====*/
 var data_global_gyms;
 var gyms_data;
+/*== Data ==*/
 
+/*==== Strings ====*/
+var kml_string_grid1 = "";
+var kml_string_grid2 = "";
+/*== Strings ==*/
+
+/*==== States ====*/
 var problems_with_gyms = false;
 
 var current_mode = "Points";
+/*== States ==*/
 
+/*==== Cells info ====*/
 var level_grid1 = parseInt(document.getElementById("level_grid1").value);
 var level_grid2 = parseInt(document.getElementById("level_grid2").value);
 
 var point1_input = document.getElementById("point1").value.split(",");
 var point2_input = document.getElementById("point2").value.split(",");
+/*== Cells info ==*/
 
-var kml_string_grid1 = "";
-var kml_string_grid2 = "";
-
+/*=== Other ===*/
 var offset = {lat: -1e-5, lng: 1e-5};
-
-getGrids();
+/*== Set global variables ==*/
 
 function updateInLevelGrid1() {
 
