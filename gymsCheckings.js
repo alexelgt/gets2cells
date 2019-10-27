@@ -60,15 +60,15 @@ function removeProblematicGymRows() {
     return Boolean(valid_gyms)
 }
 
-function getMaxMinLatLng() {
+function getMaxMinLatLng(data) {
     min_possible_lat = -90.0;
     min_possible_lng = -180.0;
 
-    max_lat = Math.max(...gyms_data.map((x) => x.lat));
-    min_lat = Math.min(...gyms_data.map((x) => x.lat));
+    max_lat = Math.max(...data.map((x) => x.lat));
+    min_lat = Math.min(...data.map((x) => x.lat));
 
-    max_lng = Math.max(...gyms_data.map((x) => x.lng));
-    min_lng = Math.min(...gyms_data.map((x) => x.lng));
+    max_lng = Math.max(...data.map((x) => x.lng));
+    min_lng = Math.min(...data.map((x) => x.lng));
 
     return [min_lat, min_lng, max_lat, max_lng]
 }

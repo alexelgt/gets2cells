@@ -95,6 +95,34 @@ function distance(point1, point2) {
 }
 /*== Get distance of to points ==*/
 
+function getCorners(data) {
+    corners_minlng = []
+    corners_maxlng = []
+
+    isFirstElement = true
+    first_element = null
+    for (data_value of data) {
+        if (isFirstElement) {
+            corners_minlng.push(data_value);
+            first_element = data_value;
+            isFirstElement = false;
+        }
+        else {
+            if (data_value.lng == first_element.lng) {
+                corners_minlng.push(data_value);
+            }
+            else {
+                corners_maxlng.push(data_value);
+            }
+        }
+    }
+
+    corners_minlng_minandmax = getMaxMinLatLng(corners_minlng);
+    corners_maxlng_minandmax = getMaxMinLatLng(corners_maxlng);
+
+    return [{lat: corners_minlng_minandmax[0], lng: corners_minlng_minandmax[1]}, {lat: corners_minlng_minandmax[2], lng: corners_minlng_minandmax[1]}, {lat: corners_maxlng_minandmax[2], lng: corners_maxlng_minandmax[1]}, {lat: corners_maxlng_minandmax[0], lng: corners_maxlng_minandmax[1]}]
+}
+
 /*==== Get lines for the grid ====*/
 function getLines(point1, point2, level) {
     var horizontal_lines = [];
@@ -106,34 +134,37 @@ function getLines(point1, point2, level) {
     /*=== Get initial cell ===*/
     var corners = getCellCorners(point1, level);
 
+    corners_fixed = getCorners(corners)
+
     /*==== Get references point ====*/
     // reference points are used for the smaller grids
-    var reference_point = {lat: corners[1].lat + offset.lat, lng: corners[1].lng + offset.lng};
-    var reference_point_next_line = {lat: corners[0].lat + offset.lat, lng: corners[0].lng + offset.lng};
+    var reference_point = {lat: corners_fixed[1].lat + offset.lat, lng: corners_fixed[1].lng + offset.lng};
+    var reference_point_next_line = {lat: corners_fixed[0].lat + offset.lat, lng: corners_fixed[0].lng + offset.lng};
     /*== Get references point ==*/
 
     var point1_innergrid = reference_point;
 
     point_to_analyze = reference_point;
-    horizontal_line_point1 = corners[1];
-    horizontal_line_point2 = corners[2];
+    horizontal_line_point1 = corners_fixed[1];
+    horizontal_line_point2 = corners_fixed[2];
 
-    vertical_lines.push([corners[1], undefined]);
+    vertical_lines.push([corners_fixed[1], undefined]);
 
     /*==== loop rows ====*/
     do {
-        horizontal_line_point1 = corners[1];
-        horizontal_line_point2 = corners[2];
+        horizontal_line_point1 = corners_fixed[1];
+        horizontal_line_point2 = corners_fixed[2];
         /*==== loop columns ====*/
         do {
             corners = getCellCorners(point_to_analyze, level);
-            horizontal_line_point2 = corners[2];
+            corners_fixed = getCorners(corners)
+            horizontal_line_point2 = corners_fixed[2];
 
             if (isFirstLine) {
-                vertical_lines.push([corners[2], undefined]);
+                vertical_lines.push([corners_fixed[2], undefined]);
             }
     
-            point_to_analyze = {lat: corners[2].lat + offset.lat, lng: corners[2].lng + offset.lng};
+            point_to_analyze = {lat: corners_fixed[2].lat + offset.lat, lng: corners_fixed[2].lng + offset.lng};
         } while (horizontal_line_point2.lng <= point2.lng);
         /*== loop columns ==*/
 
@@ -143,38 +174,40 @@ function getLines(point1, point2, level) {
     
         horizontal_lines.push([horizontal_line_point1, horizontal_line_point2]);
     
-        isPoint2InsideCell = S2.latLngToKey(corners[1].lat + offset.lat, corners[1].lng + offset.lng, level) == S2.latLngToKey(point2.lat, point2.lng, level);
+        isPoint2InsideCell = S2.latLngToKey(corners_fixed[1].lat + offset.lat, corners_fixed[1].lng + offset.lng, level) == S2.latLngToKey(point2.lat, point2.lng, level);
     
         point_to_analyze = reference_point_next_line;
     
         corners = getCellCorners(point_to_analyze, level);
-        reference_point_next_line = {lat: corners[0].lat + offset.lat, lng: corners[0].lng + offset.lng};
+        corners_fixed = getCorners(corners)
+        reference_point_next_line = {lat: corners_fixed[0].lat + offset.lat, lng: corners_fixed[0].lng + offset.lng};
     } while (!isPoint2InsideCell);
     /*== loop rows ==*/
 
     /*==== Last row ====*/
-    horizontal_line_point1 = corners[1];
-    horizontal_line_point2 = corners[2];
+    horizontal_line_point1 = corners_fixed[1];
+    horizontal_line_point2 = corners_fixed[2];
 
-    vertical_lines[0][1] = corners[1];
+    vertical_lines[0][1] = corners_fixed[1];
 
     var vertical_index = 1;
     /*==== loop columns ====*/
     do {
         corners = getCellCorners(point_to_analyze, level);
-        horizontal_line_point2 = corners[2];
+        corners_fixed = getCorners(corners)
+        horizontal_line_point2 = corners_fixed[2];
 
-        vertical_lines[vertical_index][1] = corners[2];
+        vertical_lines[vertical_index][1] = corners_fixed[2];
         vertical_index++;
 
-        point_to_analyze = {lat: corners[2].lat + offset.lat, lng: corners[2].lng + offset.lng};
+        point_to_analyze = {lat: corners_fixed[2].lat + offset.lat, lng: corners_fixed[2].lng + offset.lng};
     } while (horizontal_line_point2.lng <= point2.lng);
     /*== loop columns ==*/
 
     horizontal_lines.push([horizontal_line_point1, horizontal_line_point2]);
     /*== Last row ==*/
 
-    var point2_innergrid = {lat: corners[2].lat - offset.lat, lng: corners[2].lng - offset.lng};
+    var point2_innergrid = {lat: corners_fixed[2].lat - offset.lat, lng: corners_fixed[2].lng - offset.lng};
 
     return [horizontal_lines, vertical_lines, point1_innergrid, point2_innergrid]
 }
@@ -214,7 +247,8 @@ function setGridPoints(point1_input, point2_input) {
     /*==== If mode is "Gyms" get the grid points from the gyms coordinates ====*/
     if (current_mode == "Gyms" ) {
 
-        var [min_lat, min_lng, max_lat, max_lng] = getMaxMinLatLng();
+        
+        var [min_lat, min_lng, max_lat, max_lng] = getMaxMinLatLng(gyms_data);
 
         point1 = {lat: max_lat, lng: min_lng};
         point2 = {lat: min_lat, lng: max_lng};
